@@ -2,5 +2,169 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "messages-workspace-demo": {
+      "root": "projects/messages-workspace-demo",
+      "sourceRoot": "projects/messages-workspace-demo/src",
+      "projectType": "library",
+      "prefix": "messages",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/messages-workspace-demo/tsconfig.lib.json",
+            "project": "projects/messages-workspace-demo/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/messages-workspace-demo/src/test.ts",
+            "tsConfig": "projects/messages-workspace-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/messages-workspace-demo/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/messages-workspace-demo/tsconfig.lib.json",
+              "projects/messages-workspace-demo/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "messages-workspace-tester": {
+      "root": "projects/messages-workspace-tester/",
+      "sourceRoot": "projects/messages-workspace-tester/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/messages-workspace-tester",
+            "index": "projects/messages-workspace-tester/src/index.html",
+            "main": "projects/messages-workspace-tester/src/main.ts",
+            "polyfills": "projects/messages-workspace-tester/src/polyfills.ts",
+            "tsConfig": "projects/messages-workspace-tester/tsconfig.app.json",
+            "assets": [
+              "projects/messages-workspace-tester/src/favicon.ico",
+              "projects/messages-workspace-tester/src/assets"
+            ],
+            "styles": [
+              "projects/messages-workspace-tester/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/messages-workspace-tester/src/environments/environment.ts",
+                  "with": "projects/messages-workspace-tester/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "messages-workspace-tester:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "messages-workspace-tester:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "messages-workspace-tester:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/messages-workspace-tester/src/test.ts",
+            "polyfills": "projects/messages-workspace-tester/src/polyfills.ts",
+            "tsConfig": "projects/messages-workspace-tester/tsconfig.spec.json",
+            "karmaConfig": "projects/messages-workspace-tester/karma.conf.js",
+            "styles": [
+              "projects/messages-workspace-tester/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/messages-workspace-tester/src/favicon.ico",
+              "projects/messages-workspace-tester/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/messages-workspace-tester/tsconfig.app.json",
+              "projects/messages-workspace-tester/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "messages-workspace-tester-e2e": {
+      "root": "projects/messages-workspace-tester-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/messages-workspace-tester-e2e/protractor.conf.js",
+            "devServerTarget": "messages-workspace-tester:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "messages-workspace-tester:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/messages-workspace-tester-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "messages-workspace-demo"
 }

@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "messages-workspace-demo": [
+        "dist/messages-workspace-demo"
+      ],
+      "messages-workspace-demo/*": [
+        "dist/messages-workspace-demo/*"
+      ]
+    }
   }
 }
